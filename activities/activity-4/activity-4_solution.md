@@ -1,6 +1,6 @@
 ## Before refactor
 ```python
-def will_buy_drink(order: dict) -> bool:
+def should_upsell(order: dict) -> bool:
     """Predict if a customer will buy a drink."""
     if order.get("time_of_day") == "lunch":
         if order.get("loyalty_member") == "no":
@@ -19,7 +19,7 @@ def will_buy_drink(order: dict) -> bool:
 
 ## After refactor
 ```python
-def will_buy_drink(order: dict) -> bool:
+def should_upsell(order: dict) -> bool:
     """Simple rule-based upsell logic."""
     if order.get("temperature", 0) >= 30: return True
     if order.get("order_size", 0) >= 4: return True

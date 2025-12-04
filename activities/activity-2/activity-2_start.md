@@ -9,27 +9,27 @@ Continue working in the same notebook from your previous cycle.
 Create a new Code cell containing the following:
 
 ```python
-def will_buy_drink(order: dict) -> bool:
+def should_upsell(order: dict) -> bool:
     """Predict if a customer will buy a drink."""
     return None  # start with a failing stub (RED)
 
 
 # Positive test – loyalty at lunch → True
 order_1a = {"time_of_day": "lunch", "loyalty_member": "yes"}
-assert will_buy_drink(order_1a) is True, "FAIL: Loyalty at lunch should be upsold."
+assert should_upsell(order_1a) is True, "FAIL: Loyalty at lunch should be upsold."
 print("PASS: Test 1a")
 
 # Negative test – non-loyalty at lunch → False (prevents `return True`)
 order_1b = {"time_of_day": "lunch", "loyalty_member": "no"}
-assert will_buy_drink(order_1b) is False, "FAIL: Non-loyalty at lunch should NOT be upsold."
+assert should_upsell(order_1b) is False, "FAIL: Non-loyalty at lunch should NOT be upsold."
 print("PASS: Test 1b")
 ```
 
-This code codes a function `will_buy_drink()` and two unit tests. The unit tests are correct but the function is incomplete.
+This code codes a function `should_upsell()` and two unit tests. The unit tests are correct but the function is incomplete. This shows the essence of practical TDD: write your test(s) *first*, then write the logic to pass the tests.
 
 Run the code and note that you receive an `AssertionError`. This means that one or more of your unit tests aren't passing. This is due to the incomplete function.
 
-Your task is to modify the code in the `will_buy_drink()` function so that the tests pass. You can re-run the same Code cell regularly to test your code.
+Your task is to modify the code in the `should_upsell()` function so that the tests pass. You can re-run the same Code cell regularly to test your code.
 
 You'll know you've succeeded when the output is:
 

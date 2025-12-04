@@ -4,7 +4,7 @@ Our current code is too simple. It would offer a drink to a loyalty member at mi
 Because the logic is now a little more complex, we may want to log it. We can consider this to be an "experiment" from an ML perspective. You'll also add some logging code and explore the JupyterLab file browser to find the logs.
 
 By the end of this activity, you will have:
-- modified the Python code of the `will_buy_drink()` method so that *all* tests (old and new) pass;
+- modified the Python code of the `should_upsell()` method so that *all* tests (old and new) pass;
 - added logging code with MLflow;
 - explored the `mlruns` directory to see your "experiment" results.
 
@@ -15,13 +15,13 @@ By the end of this activity, you will have:
 ```python
 # Evening loyalty → should NOT be upsold
 order_2 = {"time_of_day": "evening", "loyalty_member": "yes"}
-assert will_buy_drink(order_2) is False, "FAIL: Evening loyalty should NOT be upsold."
+assert should_upsell(order_2) is False, "FAIL: Evening loyalty should NOT be upsold."
 print("PASS: Test 2")
 ```
 
 Now your logic must consider both `time_of_day` and `loyalty_member` to make all tests green.
 
-When you modify the `will_buy_drink()` function, make sure you re-run that cell, too, to both save the changes to the function and make sure the old tests continue to pass! ***All* tests must continue to pass as you practice TDD.**
+When you modify the `should_upsell()` function, make sure you re-run that cell, too, to both save the changes to the function and make sure the old tests continue to pass! ***All* tests must continue to pass as you practice TDD.**
 
 **Cell 5 – Log experiment with MLflow**
 
@@ -34,7 +34,7 @@ try:
     mlflow.set_experiment("hotdog-upsell")
     with mlflow.start_run(run_name="Initial Loyalty Rule"):
         order = {"time_of_day": "lunch", "loyalty_member": "yes"}
-        prediction = will_buy_drink(order)
+        prediction = should_upsell(order)
         mlflow.log_params(order)
         mlflow.log_metric("prediction", int(bool(prediction)))
         mlflow.set_tag("rule_version", "v1")

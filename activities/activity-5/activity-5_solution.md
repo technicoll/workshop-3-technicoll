@@ -1,5 +1,5 @@
 ```python
-def will_buy_drink(order: dict) -> bool:
+def should_upsell(order: dict) -> bool:
     time = str(order.get("time_of_day", "")).strip().lower()
     loyalty = str(order.get("loyalty_member", "no")).strip().lower()
     temp = int(order.get("temperature", 0) or 0)

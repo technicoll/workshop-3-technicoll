@@ -13,18 +13,18 @@ By the end of this activity, you will have:
 ```python
 # Heatwave (temperature 30 or greater) → True
 order_3 = {"time_of_day": "evening", "loyalty_member": "no", "temperature": 32}
-assert will_buy_drink(order_3) is True, "FAIL: Hot weather should trigger upsell."
+assert should_upsell(order_3) is True, "FAIL: Hot weather should trigger upsell."
 print("PASS: Test 3")
 
 # Large order (order size 4 or greater) → True
 order_4 = {"order_size": 4}
-assert will_buy_drink(order_4) is True, "FAIL: Large orders should trigger upsell."
+assert should_upsell(order_4) is True, "FAIL: Large orders should trigger upsell."
 print("PASS: Test 4")
 ```
 
 Now your logic must consider the `temperature` and `order_size` to make all tests green.
 
-When you modify the `will_buy_drink()` function, make sure you re-run that cell, too, to both save the changes to the function and make sure the old tests continue to pass! ***All* tests must continue to pass as you practice TDD.**
+When you modify the `should_upsell()` function, make sure you re-run that cell, too, to both save the changes to the function and make sure the old tests continue to pass! ***All* tests must continue to pass as you practice TDD.**
 
 ### Now refactor!
 You may now have a long chain of `if-else` statements and boolean logic that is difficult to read and understand. This is *technical debt*: the implied cost of additional work caused by choosing a quick or suboptimal solution instead of a more thorough, maintainable approach.
