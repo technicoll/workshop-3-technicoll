@@ -2,7 +2,56 @@
 
 Hands-on workshop moving from exploratory notebooks to disciplined, professional Python for machine learning.
 
-## Learning Intent
+## Work on your own copy (Codespace recommended)
+- **Preferred:** Fork this repository (or accept the GitHub Classroom link if provided), then create a Codespace from your fork. A Codespace gives you a ready-to-code cloud dev environment; learn more in the GitHub docs: https://docs.github.com/en/codespaces/about-codespaces/what-are-codespaces
+- **Local option:** Clone the repo and work on your machine if you prefer.
+- We’ll use the Python version that ships with your Codespace or local install (no explicit pin here).
+
+![GitHub Codespaces diagram](https://docs.github.com/assets/cb-68851/mw-1440/images/help/codespaces/codespaces-diagram.webp)
+
+## Python environment (venv)
+We recommend running all workshop exercises in a Python virtual environment, just as you did in Aptem Module 3.1 (automated tests) and the testing-mini-project (https://github.com/corndel-ai/testing-mini-project).
+
+- Create and activate a venv (macOS/Linux):
+  - `python -m venv .venv`
+  - `source .venv/bin/activate`
+- Windows:
+  - `python -m venv .venv`
+  - `.\\.venv\\Scripts\\activate`
+- Upgrade pip and install dependencies:
+  - `python -m pip install --upgrade pip`
+  - `pip install -r requirements.txt`
+
+> “A virtual environment is a directory that contains a Python installation for a particular version of Python, plus a number of additional packages.” — [Real Python: Python Virtual Environments: A Primer](https://realpython.com/python-virtual-environments-a-primer/)
+
+## Requirements
+Dependencies live in `requirements.txt` and match what you installed in the venv:
+- mlflow==2.15.1
+- pandas>=2.0.0
+- scikit-learn>=1.3.0
+- numpy>=1.24.0
+- jupyter>=1.0.0
+- ipykernel>=6.0.0
+- pytest>=7.0.0
+
+## MLflow (from an activated venv)
+MLflow is commonly used to track model-training experiments, but here we use it early to show how it can log any action we choose in a clear, auditable way.
+
+- Run the UI in the foreground (defaults to local paths like `./mlruns`):
+  - `mlflow ui --port 5000 --backend-store-uri file:./mlruns`
+  - Open http://localhost:5000
+- Run in the background with logs:
+  - `nohup mlflow ui --port 5000 --backend-store-uri file:./mlruns > mlflow.log 2>&1 &`
+  - `echo $! > mlflow.pid`
+  - Tail logs: `tail -f mlflow.log`
+- Stop/inspect:
+  - `kill $(cat mlflow.pid)` (or `pkill -f "mlflow ui"` if needed)
+  - `lsof -i :5000` to confirm it stopped
+
+## Notebook guidance
+- Create your notebook (none are in the repo yet). After activating the venv, use the “Select Kernel” button (top right in Jupyter) and choose the venv. 
+
+## Learning intent
 
 By the end of this workshop you will:
 
@@ -12,7 +61,7 @@ By the end of this workshop you will:
 - **Refactor** safely using tests as a safety net  
 - Connect these habits to **risk reduction** and **technical debt**
 
-## Notebook Guide (Single Notebook Flow)
+## Notebook guide (single notebook flow)
 
 We’ll work in **one Jupyter notebook** for the whole day.  
 Follow the activities in order below and add one code cell at a time.
@@ -33,10 +82,10 @@ You will work through activities in the [`activities` folder](/activities/) in o
 ### Solutions
 This repo contains solutions for each activity. These are there to ensure that you're able to continue making progress throughout the workshop in the event that you become stuck or have technical difficulties at any stage. Please use them responsibly to supplement your learning, not to replace it.
 
-### Running Tests Locally
+### Running tests locally
 
 After completing the notebook, the final function lives in `src/hotdog/rules.py`.  
-You can test it outside Jupyter like a real module.
+You can test it outside Jupyter like a real module (from an activated venv).
 
 Run from the terminal:
 
@@ -48,35 +97,7 @@ or on Windows:
 
 This executes `tests/test_rules.py` and prints concise results (e.g. `6 passed in 0.04s`).
 
-### MLflow Logging
-
-MLflow acts as your digital lab notebook.
-
-All runs are stored locally under:
-
-    file:./mlruns
-
-#### What Happens
-1. Experiment “hotdog-upsell” is created or reused.  
-2. Run “Initial Loyalty Rule” starts.  
-3. Inputs and outputs are logged as parameters and metrics.  
-4. A tag `rule_version=v1` is added for traceability.  
-
-#### Safe Logging
-If MLflow isn’t installed, `src/hotdog/logging_utils.py` prints:
-
-    [INFO] MLflow not installed — skipping logging.
-
-Enable it anytime with:
-
-    pip install mlflow==2.15.1
-
-#### Optional Script
-Run the same logic outside Jupyter:
-
-    PYTHONPATH=src python scripts/run_mlflow_example.py
-
-## Going Further (Optional)
+## Going further (optional)
 
 Export your notebook as a script for production pipelines.  
 See [Convert notebook code into Python scripts – Azure Machine Learning (Microsoft Learn)](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-convert-ml-experiment-to-production?view=azureml-api-1)
