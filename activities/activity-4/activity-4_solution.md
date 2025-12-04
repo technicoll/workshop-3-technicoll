@@ -21,7 +21,7 @@ def will_buy_drink(order: dict) -> bool:
 ```python
 def will_buy_drink(order: dict) -> bool:
     """Simple rule-based upsell logic."""
-    if order.get("temperature", 0) > 30: return True
+    if order.get("temperature", 0) >= 30: return True
     if order.get("order_size", 0) >= 4: return True
     if order.get("loyalty_member") == "yes" and order.get("time_of_day") == "lunch": return True
     return False
