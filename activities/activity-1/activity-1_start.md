@@ -37,12 +37,14 @@ Verify this was successful by looking for the final output line `Installed requi
 
 Create another new Code cell:
 
-    import sys, platform
-    print("Python:", sys.version)
-    print("Platform:", platform.platform())
-    import mlflow, pandas as pd
-    print("MLflow:", mlflow.__version__)
-    print("Environment ready ✅")
+```python
+import sys, platform
+print("Python:", sys.version)
+print("Platform:", platform.platform())
+import mlflow, pandas as pd
+print("MLflow:", mlflow.__version__)
+print("Environment ready ✅")
+```
 
 Run this and ignore any warnings about deprecated packages. (In production code, you should pay attention to these and take action, but it's not vital today.)
 
