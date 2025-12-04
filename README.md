@@ -31,7 +31,7 @@ You will work through activities in the [`activities` folder](/activities/) in o
 
 ## Help
 ### Solutions
-This repo contains solutions for each activity. These are there to ensure that you're able to continue making progress throughout the workshop in the event that you become stuck or have technical difficulties at any stage. Please use them responsibly to supplement your learning, not to replace it.
+This repo contains *one possible* solution for each activity. These are there to ensure that you're able to continue making progress throughout the workshop in the event that you become stuck or have technical difficulties at any stage. Please use them responsibly to supplement your learning, not to replace it. **These are not the only possible solution to each activity.** If you have logic that is passing the tests, it is a correct solution to the problem and you can proceed.
 
 ### Running Tests Locally
 

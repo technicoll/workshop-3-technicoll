@@ -26,10 +26,10 @@ The steps below will have you creating a Jupyter Notebook in AWS via Sagemaker S
 Create a new Code cell and enter the following:
 
     !pip uninstall -y mlflow mlflow-skinny mlflow-tracing transformers || true
-    !pip install "nvidia-ml-py3<8.0,>=7.352.0" "transformers<4.50,>=4.38.0" "mlflow==2.15.1" pandas scikit-learn
+    !pip install "nvidia-ml-py3<8.0,>=7.352.0" "transformers<4.50,>=4.38.0" "mlflow==2.15.1" "pydynamodb>=0.7.4" "pyarrow>=19.0.0" pandas scikit-learn
     print("Installed requirements. Please restart the kernel now.")
 
-Verify this was successful by looking for the final output line `Installed requirements. Please restart the kernel now.`
+Verify this was successful by looking for the final output line `Installed requirements. Please restart the kernel now.` You can disregard any dependency conflicts. (In production code, you should pay attention to these and take action, but it's not vital today.)
 
 *After* this runs, go to **Kernel → Restart Kernel**.
 

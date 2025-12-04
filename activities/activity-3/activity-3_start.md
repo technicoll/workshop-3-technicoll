@@ -1,5 +1,12 @@
 ## Expected outputs
-- You will modify the Python code of the `will_buy_drink()` method so that *all* tests (old and new) pass.
+Our current code is too simple. It would offer a drink to a loyalty member at midnight. We want to expand our functionality *by writing a test first* so that a loyalty member should *not* be offered a drink in the evening. (It's not as hot in the evening; the drink isn't as desirable!)
+
+Because the logic is now a little more complex, we may want to log it. We can consider this to be an "experiment" from an ML perspective. You'll also add some logging code and explore the JupyterLab file browser to find the logs.
+
+By the end of this activity, you will have:
+- modified the Python code of the `will_buy_drink()` method so that *all* tests (old and new) pass;
+- added logging code with MLflow;
+- explored the `mlruns` directory to see your "experiment" results.
 
 ## Step 3 – TDD Cycle 2 (+ Intro to MLflow)
 
@@ -37,3 +44,5 @@ except Exception:
 ```
 
 You should see `Experiment logged successfully ✅` printed.
+
+You can now explore the `mlruns` directory in the JupyterLab file browser to find the files MLflow created.
