@@ -30,6 +30,9 @@ You will work through activities in the [`activities` folder](/activities/) in o
 - [Activity 6: Git Simulation and Final Reflection](/activities/activity-6/activity-6_start.md)
 
 ## Help
+### Solutions
+This repo contains solutions for each activity. These are there to ensure that you're able to continue making progress throughout the workshop in the event that you become stuck or have technical difficulties at any stage. Please use them responsibly to supplement your learning, not to replace it.
+
 ### Running Tests Locally
 
 After completing the notebook, the final function lives in `src/hotdog/rules.py`.  
