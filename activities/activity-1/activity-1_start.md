@@ -1,3 +1,8 @@
+## Expected outputs
+The steps below will have you creating a Jupyter Notebook in AWS via Sagemaker Studio, to which you've hopefully become accustomed! You'll set up the environment with some necessary Python modules so you're ready to progress with the rest of the workshop. By the end, you'll have:
+- One Markdown cell.
+- Two Code cells that you've successfully run.
+
 ## Step 0 – Create Your Notebook
 
 1. In JupyterLab, click **File → New → Notebook**.  
