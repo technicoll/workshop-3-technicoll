@@ -1,6 +1,5 @@
-import json
-from hotdog.rules import will_buy_drink
-from hotdog.logging_utils import log_experiment
+from rules import will_buy_drink
+from logging_utils import log_experiment
 
 def main():
     order_to_log = {"time_of_day": "lunch", "loyalty_member": "yes"}

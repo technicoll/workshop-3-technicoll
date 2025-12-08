@@ -47,6 +47,8 @@ MLflow is commonly used to track model-training experiments, but here we use it 
 - Stop/inspect:
   - `kill $(cat mlflow.pid)` (or `pkill -f "mlflow ui"` if needed)
   - `lsof -i :5000` to confirm it stopped
+- Run the sample script from the repo root:
+  - `PYTHONPATH=src python scripts/run_mlflow_example.py`
 
 ## Notebook guidance
 - Create your notebook (none are in the repo yet). After activating the venv, use the “Select Kernel” button (top right in Jupyter) and choose the venv. 
@@ -84,20 +86,15 @@ This repo contains solutions for each activity. These are there to ensure that y
 
 ### Running tests locally
 
-After completing the notebook, the final function lives in `src/hotdog/rules.py`.  
+After completing the notebook, the final function lives in `src/rules.py`.  
 You can test it outside Jupyter like a real module (from an activated venv).
 
 Run from the terminal:
 
-    PYTHONPATH=src pytest -q
-
-or on Windows:
-
-    set PYTHONPATH=src; pytest -q
+    pytest -v
 
 This executes `tests/test_rules.py` and prints concise results (e.g. `6 passed in 0.04s`).
 
 ## Going further (optional)
 
-Export your notebook as a script for production pipelines.  
-See [Convert notebook code into Python scripts – Azure Machine Learning (Microsoft Learn)](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-convert-ml-experiment-to-production?view=azureml-api-1)
+Move on to Activity 7 to bridge these habits into a small ML pipeline. Read `activities/activity-7/activity-7__start.md` for the overview: it maps pipeline stages to their tests and gives two focused exercises to harden preprocessing and keep accuracy guardrails. Apply the same TDD + defensive + observability mindset you used here. You’ll fork and open a Codespace on the testing mini-project repo you used in Aptem Module 3.1 (https://github.com/corndel-ai/testing-mini-project); if you’ve done it before, you can repeat the core tasks or jump to the further exercises.

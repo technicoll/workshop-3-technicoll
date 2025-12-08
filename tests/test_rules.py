@@ -1,8 +1,9 @@
-import os, sys
+import os
+import sys
 # Ensure `src` is on the path when running `pytest` from project root
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
 
-from hotdog.rules import will_buy_drink
+from rules import will_buy_drink
 
 def test_loyalty_lunch_true():
     assert will_buy_drink({"time_of_day": "lunch", "loyalty_member": "yes"}) is True

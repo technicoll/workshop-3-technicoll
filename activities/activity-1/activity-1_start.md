@@ -1,14 +1,15 @@
 ## Expected outputs
-The steps below will have you creating a Jupyter Notebook in AWS via Sagemaker Studio, to which you've hopefully become accustomed! You'll set up the environment with some necessary Python modules so you're ready to progress with the rest of the workshop. By the end, you'll have:
+You'll create a Jupyter Notebook in your Codespace or local environment (using the venv you set up from the README). You'll verify the environment so you're ready to progress with the rest of the workshop. By the end, you'll have:
 - One Markdown cell.
 - Two Code cells that you've successfully run.
 
 ## Step 0 – Create Your Notebook
 
-1. In JupyterLab, click **File → New → Notebook**.  
-2. Choose the Python 3 (ipykernel) kernel.  
-3. Rename the new notebook to **Workshop3W_Master.ipynb** by right-clicking it in the explorer on the left and selected "Rename".
-4. Modify the first cell in your notebook so that it's a Markdown cell. You can do this by clicking on the dropdown menu in the notebook tab command bar that says "Code" by default, then selecting "Markdown" from the menu.
+1. Make sure you’ve created and activated the venv per the README, and installed dependencies with `pip install -r requirements.txt` (repeat here for completeness).
+2. In JupyterLab, click **File → New → Notebook**.  
+3. Choose the kernel for your venv (use the **Select Kernel** button if needed).  
+4. Rename the new notebook to **Workshop3W_Master.ipynb** by right-clicking it in the explorer on the left and selecting "Rename".
+5. Modify the first cell in your notebook so that it's a Markdown cell. You can do this by clicking on the dropdown menu in the notebook tab command bar that says "Code" by default, then selecting "Markdown" from the menu.
 
 **Add this as your first Markdown cell:**
 
@@ -19,23 +20,13 @@ The steps below will have you creating a Jupyter Notebook in AWS via Sagemaker S
 
 ---
 
-## Step 1 – Set Up Your Environment (then restart kernel)
+## Step 1 – Verify your environment (then restart kernel)
 
-**Cell 1 – Install packages**
+You should already have the venv activated and dependencies installed (per the README). Ensure your notebook is using that venv’s kernel, then verify:
 
-Create a new Code cell and enter the following:
+**Cell 1 – Verify**
 
-    !pip uninstall -y mlflow mlflow-skinny mlflow-tracing transformers || true
-    !pip install "nvidia-ml-py3<8.0,>=7.352.0" "transformers<4.50,>=4.38.0" "mlflow==2.15.1" pandas scikit-learn
-    print("Installed requirements. Please restart the kernel now.")
-
-Verify this was successful by looking for the final output line `Installed requirements. Please restart the kernel now.`
-
-*After* this runs, go to **Kernel → Restart Kernel**.
-
-**Cell 2 – Verify**
-
-Create another new Code cell:
+Create a new Code cell:
 
 ```python
 import sys, platform
