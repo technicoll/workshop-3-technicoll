@@ -44,7 +44,7 @@ Understanding how each pipeline stage is tested helps you extend the project sys
 - **Vectorize + Train (`train`)**
   - **Function**: `CountVectorizer.fit_transform` on training texts; `LogisticRegression.fit` on features/labels.
   - **Tests**: [tests/conftest.py](../tests/conftest.py) (session-scoped fixture trains on [data/raw/text-label.csv](../data/raw/text-label.csv) and returns `trained_classifier`).
-  - **Why a fixture**: Training once per test session (not per test) speeds up the suite 3x. See [TECHNICAL_WALKTHROUGH.md - Fixtures](../TECHNICAL_WALKTHROUGH.md#shared-test-fixtures-conftestpy) for details.
+  - **Why a fixture**: Training once per test session (not per test) speeds up the suite 3x.
 
 - **Predict (`predict`)**
   - **Function**: Preprocess → `vectorizer.transform` → `model.predict`; critically, **no fitting**.
@@ -61,7 +61,6 @@ Understanding how each pipeline stage is tested helps you extend the project sys
 - **Split (caller responsibility in `app.py`)**
   - **Function**: `train_test_split` isolates training/test data.
   - **Tests**: None direct; usage demonstrated in [app.py](../app.py) (train on `X_train/y_train`, evaluate on `X_test/y_test`) to avoid leakage.
-  - **Why stratification matters**: See [TECHNICAL_WALKTHROUGH.md - Stratified Split](../TECHNICAL_WALKTHROUGH.md#stratified-traintest-split) for examples of imbalanced splits.
 
 ---
 
