@@ -14,7 +14,7 @@ You'll create a Jupyter Notebook in your Codespace (or local environment, if you
 
 - **How to create your CodeSpace in GitHub**
 
-1. Go to **your** version of the repository in your GitHub accoupnt (either forked or created from a GitHub Classroom link).
+1. Go to **your** version of the repository in your GitHub account (either forked or created from a GitHub Classroom link).
 2. Select **Code** (green button near the top right).  
 3. Choose the **Codespaces** tab.  
 4. Select **Create codespace on main**.
