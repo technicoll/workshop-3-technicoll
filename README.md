@@ -1,9 +1,6 @@
 # Welcome to Workshop 3 - Upsell Like an Engineer!
 
-Hands-on workshop moving from exploratory notebooks to disciplined, professional Python for machine learning.
-
-## Notebook guidance
-- Create your notebook (none are in the repo yet). After activating the venv, use the “Select Kernel” button (top right in Jupyter) and choose the venv. 
+Hands-on workshop moving from exploratory notebooks to disciplined, professional Python for machine learning. You can read more about this scenario in [`user_brief.md](./user_brief.md).
 
 ## Learning intent
 
