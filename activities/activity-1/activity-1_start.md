@@ -60,11 +60,12 @@ You can then additionally:
   - `PYTHONPATH=src python scripts/run_mlflow_example.py`
 
 ### 2. Create notebook
-1. Make sure you’ve created and activated the venv per the section above, and installed dependencies with `pip install -r requirements.txt` (repeat here for completeness).
-2. In JupyterLab, click **File → New → Notebook**.  
-3. Choose the kernel for your venv (use the **Select Kernel** button if needed).  
-4. Rename the new notebook to **Workshop3W_Master.ipynb** by right-clicking it in the explorer on the left and selecting "Rename".
-5. Modify the first cell in your notebook so that it's a Markdown cell. You can do this by clicking on the dropdown menu in the notebook tab command bar that says "Code" by default, then selecting "Markdown" from the menu.
+1. Make sure you’ve created and activated the venv per the section above, and installed dependencies with `pip install -r requirements.txt`.
+2. In your GitHub Codespace in VS Code, from the hamgeruger menu top left, click **File → New → Jupter Notebook**.  
+3. Top right in your notebook click **Select Kernel** button then **Browse marketplace for kernel extensions**. Install the top extension in the list called **Jupyter**.
+4. Click the button top right now be called **Python 3 (ipykernel)**, then click **Python Environments...**, then select the kernel that is our virtual python enviroment that is called **.venv...**.
+5. Rename the notebook to **Workshop3W_Master.ipynb** by right-clicking it in the explorer on the left and selecting "Rename".
+6. Modify the first cell in your notebook so that it's a Markdown cell. You can do this by clicking on the three dots on the top right of the cell and in the dropdown menu select **Change Cell to Markdown**.
 
 **Add this as your first Markdown cell:**
 
