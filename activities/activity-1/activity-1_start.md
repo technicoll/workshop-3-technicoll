@@ -3,9 +3,58 @@ You'll create a Jupyter Notebook in your Codespace or local environment (using t
 - One Markdown cell.
 - Two Code cells that you've successfully run.
 
-## Step 0 – Create Your Notebook
+## Step 0 – Setup your environment and create your notebook
+### 1. Setup environment
+#### Work on your own copy (Codespace recommended)
+- **Preferred:** Fork this repository (or accept the GitHub Classroom link if provided), then create a Codespace from your fork. A Codespace gives you a ready-to-code cloud dev environment; learn more in the GitHub docs: https://docs.github.com/en/codespaces/about-codespaces/what-are-codespaces
+- **Local option:** Clone the repo and work on your machine if you prefer.
+- We’ll use the Python version that ships with your Codespace or local install (no explicit pin here).
 
-1. Make sure you’ve created and activated the venv per the README, and installed dependencies with `pip install -r requirements.txt` (repeat here for completeness).
+![GitHub Codespaces diagram](https://docs.github.com/assets/cb-68851/mw-1440/images/help/codespaces/codespaces-diagram.webp)
+
+#### Python environment (venv)
+We recommend running all workshop exercises in a Python virtual environment, just as you did in Aptem Module 3.1 (automated tests) and the testing-mini-project (https://github.com/corndel-ai/testing-mini-project).
+
+- Create and activate a venv (macOS/Linux):
+  - `python -m venv .venv`
+  - `source .venv/bin/activate`
+- Windows:
+  - `python -m venv .venv`
+  - `.\\.venv\\Scripts\\activate`
+- Upgrade pip and install dependencies:
+  - `python -m pip install --upgrade pip`
+  - `pip install -r requirements.txt`
+
+> “A virtual environment is a directory that contains a Python installation for a particular version of Python, plus a number of additional packages.” — [Real Python: Python Virtual Environments: A Primer](https://realpython.com/python-virtual-environments-a-primer/)
+
+#### Requirements
+Dependencies live in `requirements.txt` and match what you installed in the venv:
+- mlflow==2.15.1
+- pandas>=2.0.0
+- scikit-learn>=1.3.0
+- numpy>=1.24.0
+- jupyter>=1.0.0
+- ipykernel>=6.0.0
+- pytest>=7.0.0
+
+#### MLflow (from an activated venv)
+MLflow is commonly used to track model-training experiments, but here we use it early to show how it can log any action we choose in a clear, auditable way.
+
+- Run the UI in the foreground (defaults to local paths like `./mlruns`):
+  - `mlflow ui --port 5000 --backend-store-uri file:./mlruns`
+  - Open http://localhost:5000
+- Run in the background with logs:
+  - `nohup mlflow ui --port 5000 --backend-store-uri file:./mlruns > mlflow.log 2>&1 &`
+  - `echo $! > mlflow.pid`
+  - Tail logs: `tail -f mlflow.log`
+- Stop/inspect:
+  - `kill $(cat mlflow.pid)` (or `pkill -f "mlflow ui"` if needed)
+  - `lsof -i :5000` to confirm it stopped
+- Run the sample script from the repo root:
+  - `PYTHONPATH=src python scripts/run_mlflow_example.py`
+
+### 2. Create notebook
+1. Make sure you’ve created and activated the venv per the section above, and installed dependencies with `pip install -r requirements.txt` (repeat here for completeness).
 2. In JupyterLab, click **File → New → Notebook**.  
 3. Choose the kernel for your venv (use the **Select Kernel** button if needed).  
 4. Rename the new notebook to **Workshop3W_Master.ipynb** by right-clicking it in the explorer on the left and selecting "Rename".
