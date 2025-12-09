@@ -1,8 +1,3 @@
-import os
-import sys
-# Ensure `src` is on the path when running `pytest` from project root
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
-
 from rules import will_buy_drink
 
 def test_loyalty_lunch_true():
