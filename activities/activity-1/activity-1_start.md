@@ -89,3 +89,80 @@ print("Environment ready ✅")
 Run this and ignore any warnings about deprecated packages. (In production code, you should pay attention to these and take action, but it's not vital today.)
 
 Ensure that the MLflow version is 2.15.1 and you see `Environment ready ✅`.
+
+This diagram shows the full rule-based logic for deciding when to upsell a drink, and in Activities 2, 3, 4, and 5 you’ll build it up step by step: starting with a simple “loyalty at lunch” rule, extending it to other times of day, then adding heatwave and large-order rules, and finally introducing a special override for busy lunch heatwaves.
+
+
+                           ┌──────────────────────────────┐
+                           │ Start: Evaluate order input   │
+                           └───────────────┬──────────────┘
+                                           │
+                                           ▼
+        ┌───────────────────────────────────────────────────────────────┐
+        │ Rule from Cycle 1: Is loyalty_member "yes" AND time_of_day    │
+        │ == "lunch"?                                                    │
+        └───────────────────────────────┬───────────────────────────────┘
+                                        │ Yes
+                                        ▼
+                                 ┌────────────┐
+                                 │  RETURN    │
+                                 │   TRUE     │ (Loyal customer at lunch)
+                                 └────────────┘
+                                        │
+                                        │ No
+                                        ▼
+        ┌───────────────────────────────────────────────────────────────┐
+        │ Rule from Cycle 2: Is time_of_day NOT "lunch"?                │
+        │ (e.g., evening loyalty → no upsell)                           │
+        └───────────────────────────────┬───────────────────────────────┘
+                                        │ Yes
+                                        ▼
+                                 ┌────────────┐
+                                 │  RETURN    │
+                                 │   FALSE    │ (Outside lunch → no upsell)
+                                 └────────────┘
+                                        │
+                                        │ No (still lunch)
+                                        ▼
+                    ┌────────────────────────────────────────────┐
+                    │ Refactor rules: Is temperature > 30?       │
+                    └───────────────────────┬────────────────────┘
+                                            │ Yes
+                                            ▼
+                                     ┌────────────┐
+                                     │  RETURN    │
+                                     │   TRUE     │ (Heatwave upsell)
+                                     └────────────┘
+                                            │
+                                            │ No
+                                            ▼
+                  ┌───────────────────────────────────────────┐
+                  │ Refactor rules: Is order_size ≥ 4?        │
+                  └─────────────────────┬─────────────────────┘
+                                        │ Yes
+                                        ▼
+                                 ┌────────────┐
+                                 │  RETURN    │
+                                 │   TRUE     │ (Large order upsell)
+                                 └────────────┘
+                                        │
+                                        │ No
+                                        ▼
+                     ┌────────────────────────────────────────────┐
+                     │ Debugging challenge override: Is           │
+                     │ temperature > 30 AND time_of_day == lunch  │
+                     │ AND NOT loyalty_member?                     │
+                     └───────────────────────┬────────────────────┘
+                                             │ Yes
+                                             ▼
+                                      ┌────────────┐
+                                      │  RETURN    │
+                                      │   FALSE    │ (Busy lunch heatwave override)
+                                      └────────────┘
+                                             │
+                                             │ No
+                                             ▼
+                         ┌───────────────────────────┐
+                         │        RETURN FALSE        │
+                         │     (Default – no upsell) │
+                         └───────────────────────────┘
