@@ -9,9 +9,17 @@ You'll create a Jupyter Notebook in your Codespace or local environment (using t
 #### Work on your own copy (Codespace recommended)
 - **Preferred:** Fork this repository (or accept the GitHub Classroom link if provided), then create a Codespace from your fork. A Codespace gives you a ready-to-code cloud dev environment; learn more in the GitHub docs: https://docs.github.com/en/codespaces/about-codespaces/what-are-codespaces
 - **Local option:** Clone the repo and work on your machine if you prefer.
-- We’ll use the Python version that ships with your Codespace or local install (no explicit pin here).
 
 ![GitHub Codespaces diagram](https://docs.github.com/assets/cb-68851/mw-1440/images/help/codespaces/codespaces-diagram.webp)
+
+- **How to create your CodeSpace in GitHub**
+
+1. Go to **your** version of the repository in your GitHub accoupnt (either forked or created from a GitHub Classroom link).
+2. Select **Code** (green button near the top right).  
+3. Choose the **Codespaces** tab.  
+4. Select **Create codespace on main**.
+5. Wait while GitHub prepares the environment; it will open in a new browser window. 
+6. Once it loads, you can start working in VS Code within your browser.
 
 #### Python environment (venv)
 We recommend running all workshop exercises in a Python virtual environment, just as you did in Aptem Module 3.1 (automated tests) and the testing-mini-project (https://github.com/corndel-ai/testing-mini-project).
