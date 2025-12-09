@@ -73,7 +73,7 @@ You can then additionally:
 3. Top right in your notebook click **Select Kernel** button then **Browse marketplace for kernel extensions**. Install the top extension in the list called **Jupyter**.
 4. Click the button top right now be called **Python 3 (ipykernel)**, then click **Python Environments...**, then select the kernel that is our virtual python enviroment that is called **.venv...**.
 5. Rename the notebook to **Workshop3W_Master.ipynb** by right-clicking it in the explorer on the left and selecting "Rename".
-6. Modify the first cell in your notebook so that it's a Markdown cell. You can do this by clicking on the three dots on the top right of the cell and in the dropdown menu select **Change Cell to Markdown**.
+6. Modify the first cell in your notebook so that it's a Markdown cell. You can do this by clicking on the word "python" in the bottom right of the cell and selecting "markdown" from the drop-down list in the command menu that opens.
 
 **Add this as your first Markdown cell:**
 
@@ -105,6 +105,9 @@ Run this and ignore any warnings about deprecated packages. (In production code,
 
 Ensure that the MLflow version is 2.15.1 and you see `Environment ready ✅`.
 
+---
+
+## Onwards
 This diagram shows the full rule-based logic for deciding when to upsell a drink, and in Activities 2, 3, 4, and 5 you’ll build it up step by step: starting with a simple “loyalty at lunch” rule, extending it to other times of day, then adding heatwave and large-order rules, and finally introducing a special override for busy lunch heatwaves.
 
 
