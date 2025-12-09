@@ -20,7 +20,7 @@ The exercise demonstrates how small, clear tests and defensive coding habits red
 
 ## Deliverables
 1. Completed master notebook (`Workshop3W_Master.ipynb`)  
-2. Source module (`src/hotdog/rules.py`)  
+2. Source module (`src/rules.py`)  
 3. Test suite (`tests/test_rules.py`)  
 4. Logged experiment (`./mlruns/`)  
 5. Optional Curveball extension with policy flag.

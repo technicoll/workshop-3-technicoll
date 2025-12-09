@@ -2,7 +2,10 @@
 
 Hands-on workshop moving from exploratory notebooks to disciplined, professional Python for machine learning.
 
-## Learning Intent
+## Notebook guidance
+- Create your notebook (none are in the repo yet). After activating the venv, use the “Select Kernel” button (top right in Jupyter) and choose the venv. 
+
+## Learning intent
 
 By the end of this workshop you will:
 
@@ -12,7 +15,7 @@ By the end of this workshop you will:
 - **Refactor** safely using tests as a safety net  
 - Connect these habits to **risk reduction** and **technical debt**
 
-## Notebook Guide (Single Notebook Flow)
+## Notebook guide (single notebook flow)
 
 We’ll work in **one Jupyter notebook** for the whole day.  
 Follow the activities in order below and add one code cell at a time.
@@ -33,50 +36,17 @@ You will work through activities in the [`activities` folder](/activities/) in o
 ### Solutions
 This repo contains *one possible* solution for each activity. These are there to ensure that you're able to continue making progress throughout the workshop in the event that you become stuck or have technical difficulties at any stage. Please use them responsibly to supplement your learning, not to replace it. **These are not the only possible solution to each activity.** If you have logic that is passing the tests, it is a correct solution to the problem and you can proceed.
 
-### Running Tests Locally
+### Running tests locally
 
-After completing the notebook, the final function lives in `src/hotdog/rules.py`.  
-You can test it outside Jupyter like a real module.
+After completing the notebook, the final function lives in `src/rules.py`.  
+You can test it outside Jupyter like a real module (from an activated venv).
 
 Run from the terminal:
 
-    PYTHONPATH=src pytest -q
-
-or on Windows:
-
-    set PYTHONPATH=src; pytest -q
+    pytest -v
 
 This executes `tests/test_rules.py` and prints concise results (e.g. `6 passed in 0.04s`).
 
-### MLflow Logging
+## Going further (optional)
 
-MLflow acts as your digital lab notebook.
-
-All runs are stored locally under:
-
-    file:./mlruns
-
-#### What Happens
-1. Experiment “hotdog-upsell” is created or reused.  
-2. Run “Initial Loyalty Rule” starts.  
-3. Inputs and outputs are logged as parameters and metrics.  
-4. A tag `rule_version=v1` is added for traceability.  
-
-#### Safe Logging
-If MLflow isn’t installed, `src/hotdog/logging_utils.py` prints:
-
-    [INFO] MLflow not installed — skipping logging.
-
-Enable it anytime with:
-
-    pip install mlflow==2.15.1
-
-#### Optional Script
-Run the same logic outside Jupyter:
-
-    PYTHONPATH=src python scripts/run_mlflow_example.py
-
-## Going Further (Optional)
-
-Export your notebook as a script for production pipelines.  
-See [Convert notebook code into Python scripts – Azure Machine Learning (Microsoft Learn)](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-convert-ml-experiment-to-production?view=azureml-api-1)
+Move on to Activity 7 to bridge these habits into a small ML pipeline. Read `activities/activity-7/activity-7__start.md` for the overview: it maps pipeline stages to their tests and gives two focused exercises to harden preprocessing and keep accuracy guardrails. Apply the same TDD + defensive + observability mindset you used here. You’ll fork and open a Codespace on the testing mini-project repo you used in Aptem Module 3.1 (https://github.com/corndel-ai/testing-mini-project); if you’ve done it before, you can repeat the core tasks or jump to the further exercises.

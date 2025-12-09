@@ -1,7 +1,7 @@
 # Curveball Extension – Policy Overrides, Messy Inputs, and Safe Logging
 **Estimated Time:** 45–60 minutes (including debrief)  
 **Prereqs:** Completed Steps 1–6 in the Master Notebook (README);  
-`src/hotdog/rules.py` and `src/hotdog/logging_utils.py` present
+`src/rules.py` and `src/logging_utils.py` present
 
 ---
 
@@ -47,7 +47,7 @@ Add these tests to `tests/test_rules.py`:
 
     import os, sys
     sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
-    from hotdog.rules import should_upsell
+    from rules import should_upsell
 
     # Existing behaviour controls
     def test_control_evening_heatwave_non_loyalty_true():
@@ -86,7 +86,7 @@ You should now see **failing tests** — that’s your cue to extend the functio
 
 ## Task 2 – Evolve `should_upsell` to accept a `policy` flag
 
-Open `src/hotdog/rules.py` and replace the function with this version:
+Open `src/rules.py` and replace the function with this version:
 
     from typing import Any, Dict, Optional
 
@@ -182,7 +182,7 @@ All curveball tests should now pass ✅
 
 ## Task 3 – Optional safe tagging when MLflow missing
 
-Extend `src/hotdog/logging_utils.py`:
+Extend `src/logging_utils.py`:
 
     from typing import Dict, Any, Optional
 
@@ -208,8 +208,8 @@ Extend `src/hotdog/logging_utils.py`:
 
 Usage example:
 
-    from hotdog.rules import should_upsell
-    from hotdog.logging_utils import log_experiment
+    from rules import should_upsell
+    from logging_utils import log_experiment
 
     order = {"time_of_day": "lunch", "loyalty_member": "yes", "temperature": "32C"}
     policy = {"promo_lunch_heatwave": True}
