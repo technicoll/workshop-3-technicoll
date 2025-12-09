@@ -1,5 +1,5 @@
 ## Expected outputs
-You'll create a Jupyter Notebook in your Codespace or local environment (using the venv you set up from the README). You'll verify the environment so you're ready to progress with the rest of the workshop. By the end, you'll have:
+You'll create a Jupyter Notebook in your Codespace (or local environment, if you prefer) using a venv. You'll verify the environment so you're ready to progress with the rest of the workshop. By the end, you'll have:
 - setup your environment for the rest of the workshop;
 - one Markdown cell in a Jupyter notebook;
 - two Code cells in a Jupyter notebook that you've successfully run.
