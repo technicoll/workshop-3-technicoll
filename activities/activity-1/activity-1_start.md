@@ -1,7 +1,8 @@
 ## Expected outputs
 You'll create a Jupyter Notebook in your Codespace or local environment (using the venv you set up from the README). You'll verify the environment so you're ready to progress with the rest of the workshop. By the end, you'll have:
-- One Markdown cell.
-- Two Code cells that you've successfully run.
+- setup your environment for the rest of the workshop;
+- one Markdown cell in a Jupyter notebook;
+- two Code cells in a Jupyter notebook that you've successfully run.
 
 ## Step 0 – Setup your environment and create your notebook
 ### 1. Setup environment
@@ -15,15 +16,17 @@ You'll create a Jupyter Notebook in your Codespace or local environment (using t
 #### Python environment (venv)
 We recommend running all workshop exercises in a Python virtual environment, just as you did in Aptem Module 3.1 (automated tests) and the testing-mini-project (https://github.com/corndel-ai/testing-mini-project).
 
-- Create and activate a venv (macOS/Linux):
+- Create and activate a venv (macOS/Linux, including Codespaces):
   - `python -m venv .venv`
   - `source .venv/bin/activate`
-- Windows:
+- OR on Windows:
   - `python -m venv .venv`
   - `.\\.venv\\Scripts\\activate`
-- Upgrade pip and install dependencies:
-  - `python -m pip install --upgrade pip`
-  - `pip install -r requirements.txt`
+
+
+Then upgrade pip and install dependencies:
+- `python -m pip install --upgrade pip`
+- `pip install -r requirements.txt`
 
 > “A virtual environment is a directory that contains a Python installation for a particular version of Python, plus a number of additional packages.” — [Real Python: Python Virtual Environments: A Primer](https://realpython.com/python-virtual-environments-a-primer/)
 
@@ -40,13 +43,16 @@ Dependencies live in `requirements.txt` and match what you installed in the venv
 #### MLflow (from an activated venv)
 MLflow is commonly used to track model-training experiments, but here we use it early to show how it can log any action we choose in a clear, auditable way.
 
+You can run MLFlow by either:
 - Run the UI in the foreground (defaults to local paths like `./mlruns`):
   - `mlflow ui --port 5000 --backend-store-uri file:./mlruns`
   - Open http://localhost:5000
-- Run in the background with logs:
+- OR run in the background with logs:
   - `nohup mlflow ui --port 5000 --backend-store-uri file:./mlruns > mlflow.log 2>&1 &`
   - `echo $! > mlflow.pid`
   - Tail logs: `tail -f mlflow.log`
+
+You can then additionally:
 - Stop/inspect:
   - `kill $(cat mlflow.pid)` (or `pkill -f "mlflow ui"` if needed)
   - `lsof -i :5000` to confirm it stopped
