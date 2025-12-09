@@ -1,7 +1,7 @@
 """
 Hotdog upsell rules. This is an example of GOFAI... do you remember what that means?
 
-This module implements a simple, testable function `will_buy_drink` used during the workshop.
+This module implements a simple, testable function `should_upsell` used during the workshop.
 """
 from typing import Any, Dict
 
@@ -30,7 +30,7 @@ def _to_int(value: Any, default: int = 0) -> int:
     except Exception:
         return default
 
-def will_buy_drink(order: Dict[str, Any]) -> bool:
+def should_upsell(order: Dict[str, Any]) -> bool:
     """
     Predict whether to upsell a drink given an order context.
 
@@ -72,15 +72,15 @@ def will_buy_drink(order: Dict[str, Any]) -> bool:
 if __name__ == "__main__":
     # Quick self-checks mirroring our notebook asserts
     # 1a) Loyalty member at lunch -> True
-    assert will_buy_drink({"time_of_day": "lunch", "loyalty_member": "yes"}) is True
+    assert should_upsell({"time_of_day": "lunch", "loyalty_member": "yes"}) is True
     # 1b) Non-loyalty member at lunch -> False
-    assert will_buy_drink({"time_of_day": "lunch", "loyalty_member": "no"}) is False
+    assert should_upsell({"time_of_day": "lunch", "loyalty_member": "no"}) is False
     # 2) Loyalty member in evening -> False
-    assert will_buy_drink({"time_of_day": "evening", "loyalty_member": "yes"}) is False
+    assert should_upsell({"time_of_day": "evening", "loyalty_member": "yes"}) is False
     # 3) Heatwave (evening, non-loyalty) -> True
-    assert will_buy_drink({"time_of_day": "evening", "loyalty_member": "no", "temperature": 32}) is True
+    assert should_upsell({"time_of_day": "evening", "loyalty_member": "no", "temperature": 32}) is True
     # 4) Large order -> True
-    assert will_buy_drink({"order_size": 4}) is True
+    assert should_upsell({"order_size": 4}) is True
     # 5) Busy heatwave at lunch, non-loyalty -> False
-    assert will_buy_drink({"time_of_day": "lunch", "loyalty_member": "no", "temperature": 32}) is False
+    assert should_upsell({"time_of_day": "lunch", "loyalty_member": "no", "temperature": 32}) is False
     print("All inline checks passed.")

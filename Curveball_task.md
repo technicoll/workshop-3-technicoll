@@ -47,34 +47,34 @@ Add these tests to `tests/test_rules.py`:
 
     import os, sys
     sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
-    from rules import will_buy_drink
+    from rules import should_upsell
 
     # Existing behaviour controls
     def test_control_evening_heatwave_non_loyalty_true():
-        assert will_buy_drink({"time_of_day": "evening", "loyalty_member": "no", "temperature": 32}) is True
+        assert should_upsell({"time_of_day": "evening", "loyalty_member": "no", "temperature": 32}) is True
 
     def test_control_busy_lunch_heatwave_non_loyalty_false():
-        assert will_buy_drink({"time_of_day": "lunch", "loyalty_member": "no", "temperature": 32}) is False
+        assert should_upsell({"time_of_day": "lunch", "loyalty_member": "no", "temperature": 32}) is False
 
     # --- New curveball tests ---
     def test_curveball_loyalty_lunch_heatwave_true_when_promo_enabled():
         policy = {"promo_lunch_heatwave": True}
         order = {"time_of_day": "lunch", "loyalty_member": "yes", "temperature": 32}
-        assert will_buy_drink(order, policy=policy) is True
+        assert should_upsell(order, policy=policy) is True
 
     def test_curveball_loyalty_lunch_heatwave_back_compat_true_when_promo_disabled():
         order = {"time_of_day": "lunch", "loyalty_member": "yes", "temperature": 32}
-        assert will_buy_drink(order, policy={"promo_lunch_heatwave": False}) is True
+        assert should_upsell(order, policy={"promo_lunch_heatwave": False}) is True
 
     def test_curveball_messy_inputs_parsed_correctly():
         policy = {"promo_lunch_heatwave": True}
         order = {"time_of_day": "  LUNCH  ", "loyalty_member": True, "temperature": " 31.5 °C "}
-        assert will_buy_drink(order, policy=policy) is True
+        assert should_upsell(order, policy=policy) is True
 
     def test_curveball_temperature_string_without_unit():
         policy = {"promo_lunch_heatwave": True}
         order = {"time_of_day": "Lunch", "loyalty_member": "YES", "temperature": "33"}
-        assert will_buy_drink(order, policy=policy) is True
+        assert should_upsell(order, policy=policy) is True
 
 Run:
 
@@ -84,7 +84,7 @@ You should now see **failing tests** — that’s your cue to extend the functio
 
 ---
 
-## Task 2 – Evolve `will_buy_drink` to accept a `policy` flag
+## Task 2 – Evolve `should_upsell` to accept a `policy` flag
 
 Open `src/rules.py` and replace the function with this version:
 
@@ -126,7 +126,7 @@ Open `src/rules.py` and replace the function with this version:
         except Exception:
             return default
 
-    def will_buy_drink(order: Dict[str, Any], policy: Optional[Dict[str, Any]] = None) -> bool:
+    def should_upsell(order: Dict[str, Any], policy: Optional[Dict[str, Any]] = None) -> bool:
         \"\"\"
         Decide upsell with rule precedence and optional policy overrides.
 
@@ -208,12 +208,12 @@ Extend `src/logging_utils.py`:
 
 Usage example:
 
-    from rules import will_buy_drink
+    from rules import should_upsell
     from logging_utils import log_experiment
 
     order = {"time_of_day": "lunch", "loyalty_member": "yes", "temperature": "32C"}
     policy = {"promo_lunch_heatwave": True}
-    pred = will_buy_drink(order, policy=policy)
+    pred = should_upsell(order, policy=policy)
     log_experiment(order, pred, run_name="PromoCheck", tags={"promo_lunch_heatwave": "true"})
 
 ---

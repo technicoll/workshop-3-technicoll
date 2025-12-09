@@ -13,7 +13,7 @@ This workshop reframes that simple logic as an engineering exercise to teach:
 The exercise demonstrates how small, clear tests and defensive coding habits reduce risk in AI projects.
 
 ## Objectives
-- Implement a minimal decision logic function (`will_buy_drink`) using **TDD**.  
+- Implement a minimal decision logic function (`should_upsell`) using **TDD**.  
 - Record experiments using **MLflow**.  
 - Refactor safely using tests as a safety net.  
 - Extend logic through a **policy override** in the Curveball task.
