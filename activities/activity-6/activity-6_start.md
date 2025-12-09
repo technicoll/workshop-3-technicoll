@@ -1,3 +1,6 @@
+## Expected outputs
+You've done a lot of work. In a real project, this work would be done as a series of commits on a feature branch.
+
 ## Step 6 – Light Git intro, commit simulation, and reflection
 
 This step gives a gentle version-control primer. First, you’ll see what “good” commits could look like. If you’re running from a downloaded ZIP (no Git history), this is just a glimpse of what’s possible. If you’re in a Codespace on `main` (as instructed earlier), you’ll also see real tracked changes in VS Code’s Source Control view.

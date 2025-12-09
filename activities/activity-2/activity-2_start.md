@@ -25,7 +25,7 @@ assert should_upsell(order_1b) is False, "FAIL: Non-loyalty at lunch should NOT 
 print("PASS: Test 1b")
 ```
 
-This code codes a function `should_upsell()` and two unit tests. The unit tests are correct but the function is incomplete.
+This code codes a function `should_upsell()` and two unit tests. The unit tests are correct but the function is incomplete. This shows the essence of practical TDD: write your test(s) *first*, then write the logic to pass the tests.
 
 Run the code and note that you receive an `AssertionError`. This means that one or more of your unit tests aren't passing. This is due to the incomplete function.
 
