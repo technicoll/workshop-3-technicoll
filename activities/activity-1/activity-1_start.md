@@ -1,10 +1,10 @@
-## Expected outputs
+## 📋 Expected Outputs
 You'll create a Jupyter Notebook in your Codespace (or local environment, if you prefer) using a venv. You'll verify the environment so you're ready to progress with the rest of the workshop. By the end, you'll have:
 - setup your environment for the rest of the workshop;
 - one Markdown cell in a Jupyter notebook;
 - two Code cells in a Jupyter notebook that you've successfully run.
 
-## Step 0 – Setup your environment and create your notebook
+## 📝 Step 0 – Setup your environment and create your notebook
 ### 1. Setup environment
 #### Work on your own copy (Codespace recommended)
 - **Preferred:** Fork this repository (or accept the GitHub Classroom link if provided), then create a Codespace from your fork. A Codespace gives you a ready-to-code cloud dev environment; learn more in the GitHub docs: https://docs.github.com/en/codespaces/about-codespaces/what-are-codespaces
@@ -24,15 +24,16 @@ You'll create a Jupyter Notebook in your Codespace (or local environment, if you
 #### Python environment (venv)
 We recommend running all workshop exercises in a Python virtual environment, just as you did in Aptem Module 3.1 (automated tests) and the testing-mini-project (https://github.com/corndel-ai/testing-mini-project).
 
-- Create and activate a venv (macOS/Linux, including Codespaces):
+⌨️ Create and activate a venv (macOS/Linux, including Codespaces):
   - `python -m venv .venv`
   - `source .venv/bin/activate`
-- OR on Windows:
+
+⌨️ OR on Windows:
   - `python -m venv .venv`
-  - `.\\.venv\\Scripts\\activate`
+  - `.\.venv\Scripts\activate`
 
 
-Then upgrade pip and install dependencies:
+⌨️ Then upgrade pip and install dependencies:
 - `python -m pip install --upgrade pip`
 - `pip install -r requirements.txt`
 
@@ -51,10 +52,11 @@ Dependencies live in `requirements.txt` and match what you installed in the venv
 #### MLflow (from an activated venv)
 MLflow is commonly used to track model-training experiments, but here we use it early to show how it can log any action we choose in a clear, auditable way.
 
-You can run MLFlow by either:
+⌨️ You can run MLFlow by either:
 - Run the UI in the foreground (defaults to local paths like `./mlruns`):
   - `mlflow ui --port 5000 --backend-store-uri file:./mlruns`
   - Open http://localhost:5000
+  - You can stop it with `Ctrl+c`
 - OR run in the background with logs:
   - `nohup mlflow ui --port 5000 --backend-store-uri file:./mlruns > mlflow.log 2>&1 &`
   - `echo $! > mlflow.pid`
@@ -84,11 +86,11 @@ You can then additionally:
 
 ---
 
-## Step 1 – Verify your environment (then restart kernel)
+## 📝 Step 1 – Verify your environment (then restart kernel)
 
-You should already have the venv activated and dependencies installed (per the README). Ensure your notebook is using that venv’s kernel, then verify:
+You should already have the venv activated and dependencies installed (per the README). Ensure your notebook is using that venv's kernel, then verify:
 
-**Cell 1 – Verify**
+**💻 Cell 1 – Verify**
 
 Create a new Code cell:
 
@@ -103,11 +105,11 @@ print("Environment ready ✅")
 
 Run this and ignore any warnings about deprecated packages. (In production code, you should pay attention to these and take action, but it's not vital today.)
 
-Ensure that the MLflow version is 2.15.1 and you see `Environment ready ✅`.
+✅ **Checkpoint:** Ensure that the MLflow version is 2.15.1 and you see `Environment ready ✅`.
 
 ---
 
-## Onwards
+## 🗺️ Overview of activities 2 to 5
 This diagram shows the full rule-based logic for deciding when to upsell a drink, and in Activities 2, 3, 4, and 5 you’ll build it up step by step: starting with a simple “loyalty at lunch” rule, extending it to other times of day, then adding heatwave and large-order rules, and finally introducing a special override for busy lunch heatwaves.
 
 

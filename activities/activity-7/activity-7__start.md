@@ -1,10 +1,10 @@
-# Bridging Workshop 3 and the Mini Testing Project in Aptem
+# 🚀 Bridging Workshop 3 and the Mini Testing Project in Aptem
 
 This bridge keeps one idea front and centre, TDD, defensive, and observability habits you practiced on a pure function now apply to an pipeline. Below: (1) the pipeline stages mapped to the exact tests that cover them, and (2) two focused exercises to extend the project.
 
 In the Aptem module *3.1 Python Essentials for AI enginers* e-learning, if you compelted this you saw how `.py` modules and automated tests underpin long-term maintainability. Here, we can reinforce that with automated tests and version control act as living documentation of what last worked, and TDD is how you keep that truth current.
 
-> This exercise builds directly on the Aptem e-learning “31. Python Essentials for AI Engineers”. You were given a worked solution in that module; use it as your baseline here.
+> 💡 **Note:** This exercise builds directly on the Aptem e-learning "31. Python Essentials for AI Engineers". You were given a worked solution in that module; use it as your baseline here.
 
 ---
 
@@ -31,52 +31,97 @@ Before starting these exercises, ensure you have:
 
 ---
 
-## Pipeline → Tests Map (files and paths)
+## 📖 Pipeline → Tests Map: Understanding the Architecture
 
-Understanding how each pipeline stage is tested helps you extend the project systematically.
+This section maps the **data flow** through the pipeline to the **tests that verify each stage**. Understanding this helps you extend the project systematically.
 
-- **Preprocess (`preprocess_text`)**
-  - **Function**: Lowercases, strips non-alpha, collapses spaces.
-  - **Tests**: [tests/test_TextClassifier_unit.py](../tests/test_TextClassifier_unit.py) (basic normalization; you'll extend this in Exercise 1).
-  - **Current coverage**: Mixed case, empty strings
-  - **TODO items**: Lines 8-12 contain 5 test cases you'll implement
+### 🔄 Pipeline Flow Diagram
 
-- **Vectorize + Train (`train`)**
-  - **Function**: `CountVectorizer.fit_transform` on training texts; `LogisticRegression.fit` on features/labels.
-  - **Tests**: [tests/conftest.py](../tests/conftest.py) (session-scoped fixture trains on [data/raw/text-label.csv](../data/raw/text-label.csv) and returns `trained_classifier`).
-  - **Why a fixture**: Training once per test session (not per test) speeds up the suite 3x.
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                          Text Classification Pipeline                    │
+└─────────────────────────────────────────────────────────────────────────┘
 
-- **Predict (`predict`)**
-  - **Function**: Preprocess → `vectorizer.transform` → `model.predict`; critically, **no fitting**.
-  - **Tests**:
-    - [tests/test_TextClassifier_integration.py](../tests/test_TextClassifier_integration.py) - End-to-end accuracy threshold (≥65%) on unseen inputs
-    - [tests/test_TextClassifier_regression.py](../tests/test_TextClassifier_regression.py) - Performance guardrail (≥80%) on clear examples
-  - **Key insight**: Integration tests verify the pipeline works; regression tests ensure it doesn't get worse over time.
+   Raw Text Input
+        │
+        ├─────────────────────────────────────────────────────────────────┐
+        │ STAGE 1: Preprocess (preprocess_text)                           │
+        │ • Lowercase text                                                │
+        │ • Remove non-alphabetic chars (keep spaces)                     │
+        │ • Collapse multiple spaces                                      │
+        │                                                                  │
+        │ 🧪 TESTED BY: tests/test_TextClassifier_unit.py                 │
+        │    - 2 unit tests (basic, empty)                                │
+        └──────────────────────────────────────────────────────────────────┘
+        │
+   Clean Text
+        │
+        ├─────────────────────────────────────────────────────────────────┐
+        │ STAGE 2: Vectorize (CountVectorizer.fit_transform)              │
+        │ • Convert text to numerical features (word counts)              │
+        │ • Build vocabulary from training data                           │
+        │                                                                  │
+        │ 🧪 TESTED BY: tests/conftest.py (fixture setup)                 │
+        │    - Session-scoped trained_classifier fixture                  │
+        └──────────────────────────────────────────────────────────────────┘
+        │
+   Feature Matrix (X)
+        │
+        ├─────────────────────────────────────────────────────────────────┐
+        │ STAGE 3: Train (LogisticRegression.fit)                         │
+        │ • Learn patterns from features + labels                         │
+        │                                                                  │
+        │ 🧪 TESTED BY: tests/conftest.py (fixture setup)                 │
+        │    - Trains once per test session                               │
+        └──────────────────────────────────────────────────────────────────┘
+        │
+   Trained Model
+        │
+        ├─────────────────────────────────────────────────────────────────┐
+        │ STAGE 4: Predict (predict)                                      │
+        │ • Preprocess new text                                           │
+        │ • Transform using EXISTING vocabulary (no fitting!)             │
+        │ • Generate predictions                                          │
+        │                                                                  │
+        │ 🧪 TESTED BY:                                                    │
+        │    - tests/test_TextClassifier_integration.py                   │
+        │    - tests/test_TextClassifier_regression.py                    │
+        └──────────────────────────────────────────────────────────────────┘
+        │
+   Predictions
+        │
+        ├─────────────────────────────────────────────────────────────────┐
+        │ STAGE 5: Evaluate (evaluate)                                    │
+        │ • Compare predictions to true labels                            │
+        │ • Calculate accuracy score                                      │
+        │                                                                  │
+        │ 🧪 TESTED BY: tests/test_TextClassifier_regression.py           │
+        └──────────────────────────────────────────────────────────────────┘
+        │
+   Accuracy Metrics
+```
 
-- **Evaluate (`evaluate`)**
-  - **Function**: Wraps `predict` + `accuracy_score`.
-  - **Tests**: [tests/test_TextClassifier_regression.py](../tests/test_TextClassifier_regression.py) (calls `evaluate` to enforce accuracy ≥ threshold).
-  - **ML-specific testing**: Unlike deterministic functions, ML tests use thresholds, not exact values.
+### 🎯 What You'll Build
 
-- **Split (caller responsibility in `app.py`)**
-  - **Function**: `train_test_split` isolates training/test data.
-  - **Tests**: None direct; usage demonstrated in [app.py](../app.py) (train on `X_train/y_train`, evaluate on `X_test/y_test`) to avoid leakage.
+- **Exercise 1**: Replace the unit test file with a complete version that tests basic preprocessing (2 tests → 2 tests)
+- **Exercise 1b**: Practice TDD by adding 3 new failing tests (HTML, URLs, accents), then implement the features to make them pass (2 tests → 5 tests)
+- **Exercise 2**: Add MLflow experiment tracking to `train()` to log hyperparameters and metrics
 
 ---
 
-## Exercise 1: Complete the TODO Tests (TDD Foundation)
+## 📝 Exercise 1: Complete the TODO Tests (TDD Foundation)
 
-**Goal**: Reuse the Aptem e-learning test suite (from “31. Python Essentials for AI Engineers”) by dropping it into [tests/test_TextClassifier_unit.py](../tests/test_TextClassifier_unit.py). This is the same suite you were given; use it as your baseline.
+🎯 **Goal**: Reuse the Aptem e-learning test suite (from "31. Python Essentials for AI Engineers") by dropping it into [tests/test_TextClassifier_unit.py](../tests/test_TextClassifier_unit.py). This is the same suite you were given; use it as your baseline.
 
-**Time**: 20-30 minutes
+⏱️ **Time**: 20-30 minutes
 
 **Why this matters**: The current `preprocess_text` implementation ([src/TextClassifier.py](../src/TextClassifier.py#L25-L37)) is intentionally basic. Production text preprocessing must handle edge cases: punctuation, multiple spaces, numbers, symbols. These TODOs guide you to harden it systematically using the TDD approach from Workshop 3W.
 
 ---
 
-### Step 1: Drop in the reference tests
+### 📝 Step 1: Replace the test file with complete tests
 
-Paste the Aptem reference tests into `tests/test_TextClassifier_unit.py` (replace the TODO comments), directly below `test_preprocess_text_empty()`:
+💻 Replace the entire contents of `tests/test_TextClassifier_unit.py` with the following code:
 
 ```python
 from src.TextClassifier import TextClassifier
@@ -113,11 +158,19 @@ def test_preprocess_text_empty():
     assert classifier.preprocess_text("") == ""
 ```
 
-**TDD Principle**: Keep tests as your source of truth. If they fail, fix the implementation; if they pass, you’ve documented the behavior.
+🔑 **TDD Principle**: Keep tests as your source of truth. If they fail, fix the implementation; if they pass, you've documented the behavior.
 
 ---
 
-### Step 3: Run just the unit tests and observe results (🔴 RED)
+### 📝 Step 2: Save the file
+
+💾 Save `tests/test_TextClassifier_unit.py` (Ctrl+S on Windows/Linux, Cmd+S on macOS).
+
+---
+
+### 📝 Step 3: Run just the unit tests and observe results (🔴 RED)
+
+⌨️ Run the tests:
 
 ```bash
 pytest tests/test_TextClassifier_unit.py -v
@@ -127,9 +180,9 @@ pytest tests/test_TextClassifier_unit.py -v
 
 ---
 
-### Step 4: Verify implementation (🟢 GREEN PHASE)
+### 📝 Step 4: Verify implementation (🟢 GREEN PHASE)
 
-The current implementation should take care of all these cases:
+💻 The current implementation should take care of all these cases:
 
 ```python
 def preprocess_text(self, text: str) -> str:
@@ -150,9 +203,11 @@ If any test fails, debug which assertion failed and adjust the implementation.
 
 ---
 
-### Step 5: Ensure full test suite still passes
+### 📝 Step 5: Ensure full test suite still passes
 
 Your changes to unit tests shouldn't break integration or regression tests:
+
+⌨️ Run all tests:
 
 ```bash
 pytest tests/ -v
@@ -166,11 +221,11 @@ tests/test_TextClassifier_unit.py::test_preprocess_text_basic PASSED            
 tests/test_TextClassifier_unit.py::test_preprocess_text_empty PASSED                                                                                                    [100%]
 ```
 
-**Success criteria**: 100% of tests pass.
+✅ **Checkpoint**: 100% of tests pass.
 
 ---
 
-**🎓 Exercise 1 Complete!** You've successfully:
+🎓 **Exercise 1 Complete!** You've successfully:
 - ✅ Verified the e-learning tests work with the current implementation
 - ✅ Confirmed unit tests in isolation
 - ✅ Confirmed integration/regression tests still pass (system-level health check)
@@ -179,19 +234,19 @@ tests/test_TextClassifier_unit.py::test_preprocess_text_empty PASSED            
 
 ---
 
-## Exercise 1b: TDD in Action — Write Failing Tests First (🔴 RED → 🟢 GREEN)
+## 📝 Exercise 1b: TDD in Action — Write Failing Tests First (🔴 RED → 🟢 GREEN)
 
-**Goal**: Experience true TDD by adding tests for features the current `preprocess_text` does NOT handle. You'll see tests fail (RED), then update the implementation to make them pass (GREEN).
+🎯 **Goal**: Experience true TDD by adding tests for features the current `preprocess_text` does NOT handle. You'll see tests fail (RED), then update the implementation to make them pass (GREEN).
 
-**Time**: 25-35 minutes
+⏱️ **Time**: 25-35 minutes
 
 **Why this matters**: The current implementation is intentionally limited. Real-world text data contains HTML tags, URLs, and accented characters. This exercise shows how TDD drives feature development—you write the test first, watch it fail, then implement the fix.
 
 ---
 
-### Step 1: Add the failing tests (🔴 RED PHASE)
+### 📝 Step 1: Add the failing tests (🔴 RED PHASE)
 
-Add these new test functions to the **end** of `tests/test_TextClassifier_unit.py`:
+💻 Add these new test functions to the **end** of `tests/test_TextClassifier_unit.py`:
 
 ```python
 # =============================================================================
@@ -225,24 +280,28 @@ def test_preprocess_text_accented_characters():
     assert classifier.preprocess_text("El Niño") == "el nino"
 ```
 
+💾 Save the file.
+
 ---
 
-### Step 2: Run tests and confirm they fail (🔴 RED)
+### 📝 Step 2: Run tests and confirm they fail (🔴 RED)
+
+⌨️ Run the tests:
 
 ```bash
 pytest tests/test_TextClassifier_unit.py -v
 ```
 
-**Expected output**: You should see **3 failing tests**:
+**Expected output**: You should see **3 failing tests** (out of 5 total unit tests):
 
 ```
-tests/test_TextClassifier_integration.py::test_end_to_end_pipeline_integration PASSED                                            [ 14%]
-tests/test_TextClassifier_regression.py::test_model_regression_accuracy PASSED                                                   [ 28%]
-tests/test_TextClassifier_unit.py::test_preprocess_text_basic PASSED                                                             [ 42%]
-tests/test_TextClassifier_unit.py::test_preprocess_text_empty PASSED                                                             [ 57%]
-tests/test_TextClassifier_unit.py::test_preprocess_text_html_tags FAILED                                                         [ 71%]
-tests/test_TextClassifier_unit.py::test_preprocess_text_urls FAILED                                                              [ 85%]
-tests/test_TextClassifier_unit.py::test_preprocess_text_accented_characters FAILED                                               [100%]
+tests/test_TextClassifier_unit.py::test_preprocess_text_basic PASSED
+tests/test_TextClassifier_unit.py::test_preprocess_text_empty PASSED
+tests/test_TextClassifier_unit.py::test_preprocess_text_html_tags FAILED
+tests/test_TextClassifier_unit.py::test_preprocess_text_urls FAILED
+tests/test_TextClassifier_unit.py::test_preprocess_text_accented_characters FAILED
+
+========================= 3 failed, 2 passed in 0.12s =========================
 ```
 
 **Why do they fail?** Let's analyze:
@@ -257,9 +316,9 @@ tests/test_TextClassifier_unit.py::test_preprocess_text_accented_characters FAIL
 
 ---
 
-### Step 3: Update `preprocess_text` to pass all tests (🟢 GREEN PHASE)
+### 📝 Step 3: Update `preprocess_text` to pass all tests (🟢 GREEN PHASE)
 
-Open `src/TextClassifier.py` and replace the `preprocess_text` method with this enhanced version:
+💻 Open `src/TextClassifier.py` and replace the `preprocess_text` method with this enhanced version:
 
 ```python
 def preprocess_text(self, text: str) -> str:
@@ -300,6 +359,8 @@ def preprocess_text(self, text: str) -> str:
     return text
 ```
 
+💾 Save the file.
+
 **Key additions explained**:
 
 1. **HTML removal**: `re.sub(r"<[^>]+>", "", text)` matches anything between `<` and `>`
@@ -308,13 +369,15 @@ def preprocess_text(self, text: str) -> str:
 
 ---
 
-### Step 4: Run tests again — all should pass (🟢 GREEN)
+### 📝 Step 4: Run tests again — all should pass (🟢 GREEN)
+
+⌨️ Run the tests:
 
 ```bash
 pytest tests/test_TextClassifier_unit.py -v
 ```
 
-**Expected output**:
+**Expected output**: All 5 unit tests should now pass:
 
 ```
 tests/test_TextClassifier_unit.py::test_preprocess_text_basic PASSED
@@ -323,22 +386,24 @@ tests/test_TextClassifier_unit.py::test_preprocess_text_html_tags PASSED
 tests/test_TextClassifier_unit.py::test_preprocess_text_urls PASSED
 tests/test_TextClassifier_unit.py::test_preprocess_text_accented_characters PASSED
 
-========================= 5 passed in 0.15s =========================
+========================= 5 passed in 0.02s =========================
 ```
 
 🎉 **All tests pass!**
 
 ---
 
-### Step 5: Verify full test suite still passes
+### 📝 Step 5: Verify full test suite still passes
 
 Ensure your changes don't break integration or regression tests:
+
+⌨️ Run all tests:
 
 ```bash
 pytest tests/ -v
 ```
 
-**Expected**: All tests pass (unit + integration + regression).
+**Expected**: All 7 tests pass (5 unit + 1 integration + 1 regression).
 
 ---
 
@@ -359,144 +424,37 @@ This is why we test—if normalisation hurts accuracy on your specific dataset, 
 
 ---
 
-## Exercise 1c: Research Challenge — Repeated Characters (Independent TDD)
+## 📝 Exercise 2: Add Experiment Tracking with MLflow
 
-**Goal**: Apply TDD independently by writing a failing test, then researching and implementing the solution yourself.
+🎯 **Goal**: Instrument your training pipeline with MLflow to track experiments, then make a change and compare results.
 
-**Time**: 20-30 minutes
-
-**Why this matters**: In the real world, you won't always have a solution handed to you. This exercise simulates that experience—you define the behavior with a test, then figure out how to implement it.
-
----
-
-### The Challenge: Normalize Repeated Characters
-
-Social media and informal text often contains exaggerated spelling for emphasis:
-- `"sooooo good"` → should become `"so good"`  
-- `"yessss"` → should become `"yes"`
-- `"hellloooo"` → should become `"helo"` (or `"hello"` depending on your approach)
-
-**Why does this matter for classification accuracy?**
-
-Imagine your training data contains `"good"` labelled as positive sentiment. At prediction time, someone writes `"goooood"`—without normalization, the model sees this as an unknown word and can't use what it learned about `"good"`. By collapsing repeated characters, `"goooood"` becomes `"good"` (or `"god"`), letting the model recognize it.
-
-> **Key insight**: Preprocessing should help the model generalize from training data to real-world input. Repeated character normalisation bridges informal text back to the vocabulary the model learned.
-
-Your task: Add a test that fails, then research how to fix it.
-
----
-
-### Step 1: Add the failing test (🔴 RED)
-
-Add this test to the end of `tests/test_TextClassifier_unit.py`:
-
-```python
-def test_preprocess_text_repeated_characters():
-    """Research Challenge: Repeated characters should be collapsed."""
-    classifier = TextClassifier()
-    # Repeated characters should be reduced (at minimum to 2, ideally to 1)
-    assert classifier.preprocess_text("sooooo") == "so"
-    assert classifier.preprocess_text("yessss") == "yes"
-    assert classifier.preprocess_text("goooood") == "god"  # or "good" - your choice!
-    assert classifier.preprocess_text("normal text") == "normal text"  # unchanged
-```
-
----
-
-### Step 2: Confirm the test fails
-
-```bash
-pytest tests/test_TextClassifier_unit.py::test_preprocess_text_repeated_characters -v
-```
-
-You should see output like:
-```
-AssertionError: assert 'sooooo' == 'so'
-```
-
----
-
-### Step 3: Research and implement (🟢 GREEN) — YOU figure this out!
-
-**Hints**:
-- 🔍 Search: "python regex repeated characters"
-- 🔍 Search: "regex backreference"
-- 🔍 The pattern involves capturing a character and matching when it repeats
-- 🤖 And of course we could ask a chatbot for a solution! However, it's still good practice to find online offical guides to validate what chatbots tell us.
-
-**Things to consider**:
-- Where in `preprocess_text` should this step go?
-- Should you reduce to 1 character or 2? (e.g., `"goood"` → `"god"` or `"good"`?)
-- How do you handle legitimate double letters like `"good"` or `"book"`?
-
-**Classic and authoritaive Resources for this exercise**:
-- [Python `re` module documentation](https://docs.python.org/3/library/re.html)
-- [Regex101](https://regex101.com/) — test your regex patterns interactively
-
----
-
-### Step 4: Verify your solution
-
-```bash
-pytest tests/test_TextClassifier_unit.py -v
-```
-
-All tests should pass, including your new one.
-
----
-
-### Step 5: Reflect
-
-Once you've solved it, consider:
-- Was reducing to 1 character the right choice? What breaks?
-- Would reducing to 2 characters be safer? (e.g., `"goood"` → `"good"`)
-- How would you handle edge cases like `"aaa"` or single-letter words?
-
-**Note**: There's no single "correct" answer—different NLP tasks require different approaches. The important thing is that your test documents your decision.
-
----
-
-**🎓 Exercise 1c Complete!** You've:
-- ✅ Written a test without a provided solution
-- ✅ Researched regex patterns independently
-- ✅ Made design decisions about edge cases
-- ✅ Practiced the full TDD cycle with minimal guidance
-
-**This is what real-world TDD feels like—tests define behavior, implementation requires research.**
-
----
-
-## Exercise 2: Add Experiment Tracking with MLflow
-
-**Goal**: Instrument your training pipeline with MLflow to track experiments, then make a change and compare results.
-
-**Time**: 15-20 minutes
+⏱️ **Time**: 15-20 minutes
 
 **Why this matters**: In Workshop 3 you have logged function calls to observe behaviour. In ML, you log *experiments*—each model training run with its hyperparameters and results. This lets you answer questions like "Did changing max_iter from 1000 to 2000 improve accuracy?"
 
 ---
 
-### Step 1: Add MLflow to dependencies
+### 📝 Step 1: Add MLflow to dependencies
 
-Edit [requirements.txt](../requirements.txt) and add:
+💻 Edit [requirements.txt](../requirements.txt) and add:
 
 ```
 mlflow==2.15.1
 setuptools
 ```
 
-Then install (make sure your venv is activated):
+⌨️ Then install (make sure your venv is activated):
 
 ```bash
-source venv/bin/activate  # if not already activated
+source .venv/bin/activate  # if not already activated
 pip install -r requirements.txt
 ```
 
 ---
 
-### Step 2: Instrument the `train` method with MLflow logging
+### 📝 Step 2: Instrument the `train` method with MLflow logging
 
-Open [src/TextClassifier.py](../src/TextClassifier.py) and replace the `train` method with this version that tracks both **hyperparameters** and **accuracy**:
+💻 Open [src/TextClassifier.py](../src/TextClassifier.py) and replace the `train` method with this version that tracks both **hyperparameters** and **accuracy**:
 
 ```python
 def train(self, texts: list[str], labels: list[str]):
@@ -537,6 +495,8 @@ def train(self, texts: list[str], labels: list[str]):
     logging.info(f"Model training completed. Training accuracy: {train_accuracy:.4f}")
 ```
 
+💾 Save the file.
+
 **What we're logging**:
 - **Parameters**: `max_iter`, model type, vectorizer type (the choices we made)
 - **Metrics**: Training samples, vocabulary size, and **training accuracy** (the results)
@@ -545,7 +505,9 @@ Now when you compare runs in MLflow UI, you'll see how accuracy changes with dif
 
 ---
 
-### Step 3: Run the baseline experiment
+### 📝 Step 3: Run the baseline experiment
+
+⌨️ Run the app:
 
 ```bash
 python app.py
@@ -557,9 +519,9 @@ This trains the model and logs the first experiment to MLflow. Note the output a
 
 ---
 
-### Step 4: Make a change to the model
+### 📝 Step 4: Make a change to the model
 
-Open [src/TextClassifier.py](../src/TextClassifier.py) and modify the `__init__` method:
+💻 Open [src/TextClassifier.py](../src/TextClassifier.py) and modify the `__init__` method:
 
 **Change this**:
 ```python
@@ -571,11 +533,13 @@ self.model = LogisticRegression(max_iter=1000)
 self.model = LogisticRegression(max_iter=2000)  # Increased iterations
 ```
 
-Save the file.
+💾 Save the file.
 
 ---
 
-### Step 5: Run the modified experiment
+### 📝 Step 5: Run the modified experiment
+
+⌨️ Run the app again:
 
 ```bash
 python app.py
@@ -585,16 +549,18 @@ This trains the model again with the new hyperparameter and logs a second experi
 
 ---
 
-### Step 6: Launch MLflow UI and compare runs
+### 📝 Step 6: Launch MLflow UI and compare runs
 
-First, make sure your venv is activated, then launch the UI:
+⌨️ First, make sure your venv is activated, then launch the UI:
 
 ```bash
-source venv/bin/activate  # if not already activated
+source .venv/bin/activate  # if not already activated
 mlflow ui --port 5000 --backend-store-uri file:./mlruns
 ```
 
 **Open your browser**: http://localhost:5000
+
+> 💡 **GitHub Codespaces users**: Your Codespace will automatically forward port 5000. Look for the "Ports" tab in VS Code and click the globe icon next to port 5000, or check the notification popup to open the forwarded URL (it will look like `https://<codespace-name>-5000.app.github.dev`).
 
 You should see:
 - **Experiments table**: Two runs with different `max_iter` values
@@ -605,7 +571,7 @@ You should see:
 2. Click **"Compare"** button
 3. See side-by-side differences in parameters and metrics
 
-**Questions to explore**:
+🤔 **Questions to explore**:
 - Did increasing `max_iter` change accuracy?
 - Is vocabulary size the same? (It should be—vocab doesn't depend on model training)
 - How long did each run take?
@@ -618,7 +584,7 @@ You should see:
 
 ---
 
-### Step 7: Experiment freely (optional)
+### 🚀 Step 7: Experiment freely (optional)
 
 Try other changes and observe in MLflow:
 
@@ -649,7 +615,7 @@ Each change creates a new run in MLflow. You can compare all of them to see what
 
 ---
 
-## Going Further: Ideas for Exploration
+## 🚀 Going Further: Ideas for Exploration
 
 You've completed the core bridge exercises. Here are directions you could explore next:
 

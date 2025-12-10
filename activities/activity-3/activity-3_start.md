@@ -1,4 +1,4 @@
-## Expected outputs
+## 📋 Expected Outputs
 Our current code is too simple. It would offer a drink to a loyalty member at midnight. We want to expand our functionality *by writing a test first* so that a loyalty member should *not* be offered a drink in the evening. (It's not as hot in the evening; the drink isn't as desirable!)
 
 Because the logic is now a little more complex, we may want to log it. We can consider this to be an "experiment" from an ML perspective. You'll also add some logging code and explore the JupyterLab file browser to find the logs.
@@ -8,9 +8,9 @@ By the end of this activity, you will have:
 - added logging code with MLflow;
 - explored the `mlruns` directory to see your "experiment" results.
 
-## Step 3 – TDD Cycle 2 (+ Intro to MLflow)
+## 📝 Step 3 – TDD Cycle 2 (🔴 Red → 🟢 Green + Intro to MLflow)
 
-**Cell 4 – Add a new test**
+**💻 Cell 4 – Add a new test**
 
 ```python
 # Evening loyalty → should NOT be upsold
@@ -21,9 +21,9 @@ print("PASS: Test 2")
 
 Now your logic must consider both `time_of_day` and `loyalty_member` to make all tests green.
 
-When you modify the `should_upsell()` function, make sure you re-run that cell, too, to both save the changes to the function and make sure the old tests continue to pass! ***All* tests must continue to pass as you practice TDD.**
+⚠️ **Warning:** When you modify the `should_upsell()` function, make sure you re-run that cell, too, to both save the changes to the function and make sure the old tests continue to pass! ***All* tests must continue to pass as you practice TDD.**
 
-**Cell 5 – Log experiment with MLflow**
+**💻 Cell 5 – Log experiment with MLflow**
 
 Add this to a new Code cell and run:
 
@@ -43,6 +43,7 @@ except Exception:
     print("[INFO] MLflow not installed — skipping logging safely.")
 ```
 
-You should see `Experiment logged successfully ✅` printed.
+✅ **Checkpoint:** You should see `Experiment logged successfully ✅` printed.
 
-You can now explore the `mlruns` directory in the JupyterLab file browser to find the files MLflow created.
+- You can now  explore the `mlruns` directory in the VS Code file browser to find the files MLflow created.
+- Or browse the same files in the ML Flow UI. If you've not done this already, as a reminder, you would run `mlflow ui --port 5000 --backend-store-uri file:./mlruns` then open http://localhost:5000

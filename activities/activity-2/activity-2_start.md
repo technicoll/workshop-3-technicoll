@@ -1,10 +1,10 @@
-## Expected outputs
+## 📋 Expected Outputs
 You will add Python code to an incomplete function so that two unit tests pass.
 
-## Step 2 – TDD Cycle 1 (Red → Green)
+## 📝 Step 2 – TDD Cycle 1 (🔴 Red → 🟢 Green)
 Continue working in the same notebook from your previous cycle.
 
-**Cell 3 – Create function and tests**
+**💻 Cell 3 – Create function and tests**
 
 Create a new Code cell containing the following:
 
@@ -31,14 +31,14 @@ Run the code and note that you receive an `AssertionError`. This means that one 
 
 Your task is to modify the code in the `should_upsell()` function so that the tests pass. You can re-run the same Code cell regularly to test your code.
 
-You'll know you've succeeded when the output is:
+✅ **Checkpoint:** You'll know you've succeeded when the output is:
 
 ```
 PASS: Test 1a
 PASS: Test 1b
 ```
 
-## Hints
-- **Reflect:** What’s the smallest logic that barely passes both tests?
+## 💡 Hints
+- 🤔 **Reflect:** What's the smallest logic that barely passes both tests?
 - Try to fix one test at a time and build up the logic.
 - What are the essential features of your function? What is the argument? What is the argument's type? What is the type of the return value?
