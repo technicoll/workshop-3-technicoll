@@ -67,4 +67,4 @@ Verification is via **pytest** unit tests confirming all expected cases pass.
 | v1.1 | 2025-11-03 | Curveball extension — promo policy + messy-input parsing |
 
 Maintainer: **Dr Michael Robert Hoffman**  
-Location: `src/hotdog/rules.py`
+Location: `src/rules.py`
