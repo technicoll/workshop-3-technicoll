@@ -1,6 +1,6 @@
 # Welcome to Workshop 3 - Upsell Like an Engineer!
 
-Hands-on workshop moving from exploratory notebooks to disciplined, professional Python for machine learning. You can read more about this scenario in [`user_brief.md](./user_brief.md).
+Hands-on workshop moving from exploratory notebooks to disciplined, professional Python for machine learning. You can read more about this scenario in [`user_brief.md`](./user_brief.md).
 
 ---
 
